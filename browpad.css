@@ -1,0 +1,148 @@
+
+#paint {
+	width: 100%;
+	height: 4500px;
+	padding: 5px;
+}
+
+#sketch {
+	border: 1px solid #eee;
+	position: relative;
+	float: left;
+	height: 100%;
+	width: 100%;
+	padding: 10px;
+}
+
+
+
+#tmp_canvas {
+	position: absolute;
+	left: 10px; 
+	top: 10px;
+	cursor: crosshair;
+}
+
+#all-tools {
+	width: 620px;
+	margin: 0 auto;
+}
+
+#tool-panel {
+	display: inline-block;
+	padding: 0px 0px;
+	position: relative;
+	border-radius: 4px;
+}
+
+#tool-panel .btn-group {
+	width: 180px;
+	margin: 0 auto;
+	display: block;
+	background-color: #fafafa;
+	overflow: auto;
+	padding: 0px 4px;
+}
+
+#tool-panel .btn-group > .btn {
+	float: none;
+}
+
+#size-panel {
+	width: 80px;
+	display: inline-block;
+	margin-left: 10px;
+}
+
+
+#tool-panel .btn-group {
+	display: inline-block;
+}
+
+#size-panel .title {
+	position: relative;
+	top: 10px;
+	font-weight: bold;
+	color: rgba(100,100,100, 0.8);
+	font-style: italic;
+	font-size: 13px;
+	text-align: center;
+}
+
+#choose-size {
+	display: block;
+	position: relative;
+	top: 16px;
+}
+
+#tool-panel .btn-group .btn{
+	background-color: #fafafb;
+}
+
+#size-panel .radio-group {
+	display: block;
+	width: 79px;
+	margin: 0 auto;
+}
+
+#size-panel .choose-radio {
+	display: inline-block;
+	padding: 0 2px;
+}
+
+#size-panel .digit {
+	padding-left: 3px;
+}
+
+#color-panel .btn-group {
+	border: 1px solid gray;
+	width: 147px;
+}
+
+#color-panel .btn {
+	width: 30px;
+	height: 25px;
+	border: 1px solid rgba(200,200,200,0.8);
+}
+
+#color-panel .btn-group > .btn:first-child {
+    margin-left: -1;
+}
+
+
+#color-panel {
+	margin-left: 20px;
+	display: inline-block;
+}
+
+
+#undo-panel {
+	position: relative;
+	top: 14px;
+	display: inline-block;
+	margin-left: 10px;
+}
+
+#redo-tool {
+	background-color: #fafafa;
+}
+
+
+#paint-clear {
+	margin-left: 0px;
+	padding-top: 1px;
+	padding-bottom: 1px;
+	width: 75px;
+}
+
+#text_tool {
+    position: absolute;
+    border: 1px dashed black;
+    outline: 0;
+    display: none;
+    
+    padding: 4px 8px; 
+    font: 14px;
+    overflow: hidden;
+    white-space: nowrap;
+}

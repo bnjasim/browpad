@@ -1,0 +1,131 @@
+<html>
+<head>
+<meta charset="utf-8">
+<title>Browpad</title>
+<link rel="stylesheet" type="text/css" href="bootstrap.css"/>
+<link rel="stylesheet" type="text/css" href="font-awesome/css/font-awesome.min.css"/>
+
+<link rel="stylesheet" type="text/css" href="browpad.css"/>
+</head>
+
+<body>
+
+    <div id="all-tools">
+
+      <div id="tool-panel">
+
+          <div class="btn-group">
+              <button class="btn" type="button" data-divbtn="pencil" title="Pencil">
+                  <div class="fa fa-pencil"></div>
+              </button>
+
+              <button class="btn" type="button" data-divbtn="line" title="Line">
+                  <b class="">&nbsp;|</b>
+              </button>
+
+              <button class="btn" type="button" data-divbtn="eraser" title="Eraser">
+                  <div class="fa fa-eraser"></div>
+              </button>
+
+              <button class="btn" type="button" data-divbtn="square" title="Square">
+                  <div class="fa fa-square-o"></div>
+              </button>
+
+              <button class="btn" type="button" data-divbtn="fill" title="Fill">
+                  <div class="fa fa-tint"></div>
+              </button>
+
+              <button class="btn" type="button" data-divbtn="circle" title="Circle">
+                  &nbsp;<div class="fa fa-circle-o"></div>
+              </button>
+
+              <button class="btn" type="button" data-divbtn="text" title="Text">
+                  <div class="fa fa-font"></div>
+              </button>
+
+              <button class="btn" type="button" data-divbtn="ellipse" title="Ellipse">
+                  <div class="fa fa-opera"></div>
+              </button>       
+              
+          </div>
+
+      </div>    
+
+      <div id="size-panel">
+            <div class="title">Tool Size</div>
+
+            <form id="choose-size">
+              <div class="radio-group">
+                <div class="choose-radio"><input type="radio" name="size" value="1"> <div class="digit">1</div></div>
+                <div class="choose-radio"><input type="radio" name="size" value="2" checked="checked"> <div class="digit">2</div></div>
+                <div class="choose-radio"><input type="radio" name="size" value="3"> <div class="digit">3</div></div>
+                <div class="choose-radio"><input type="radio" name="size" value="4"> <div class="digit">4</div></div>
+              </div>  
+            </form>
+      </div>      
+
+       
+      <div id="color-panel">
+			  <div class="btn-group">
+				
+        		<button class="btn" type="button" title="Black"  data-color="black" style="background-color:black"> 
+            </button>  
+            <button class="btn" type="button"  data-color="purple" title="Purple" style="background-color:purple">  
+            </button> 
+            <button class="btn" type="button" title="Brown" data-color="brown"  style="background-color:brown"> 
+            </button>          
+            <button class="btn" type="button"  data-color="magenta" title="Magenta" style="background-color:magenta"> 
+            </button>  
+            <button class="btn" type="button" title="Orange"  data-color="orange" style="background-color:orange">  
+            </button>          
+ 
+            <button class="btn" type="button" title="Gray"  data-color="gray" style="background-color:gray"> 
+            </button>          
+        		<button class="btn" type="button" data-color="blue" title="Blue" style="background-color:blue"> 
+            </button>
+            <button class="btn" type="button" data-color="red" title="Red" style="background-color:red">
+            </button> 
+            <button class="btn" type="button"  data-color="cyan" title="Cyan" style="background-color:cyan">  
+            </button> 
+            <button class="btn" type="button" data-color="lime" title="Green" style="background-color:lime">  
+            </button>   
+        		  
+        </div>
+      </div>	
+
+      <div id="undo-panel">
+    	  <div id="paint-undo-redo">
+    	  	<div class="btn-group">
+    	  		<button id="undo-tool" class="btn btn-default" type="button" title="Undo">	
+    	  			<div class="fa fa-undo"></div>
+        		</button>          
+        		<button id="redo-tool" class="btn" type="button" title="Redo">	
+    	  			<div class="fa fa-repeat"></div>
+        		</button>          
+    	  	</div>
+    	  </div>
+
+    	  <button id="paint-clear" type="button" class="btn btn-default">Clear</button>
+      </div>
+    
+    </div> <!-- All tools End -->
+
+    <div>
+        <div id="paint">
+          	
+          <div id="sketch">
+		  		  <canvas id="canvas"></canvas>
+		  	  </div>
+
+        </div>	
+		</div> 
+
+    
+
+   
+  
+
+<script src="jquery.js" type="text/javascript"></script>
+<script src="browpad.js" type="text/javascript"></script>
+</body>
+</html>

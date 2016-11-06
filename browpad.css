@@ -102,17 +102,13 @@
 
 #color-panel {
 	margin-top: 20px;
-	margin-left: 13px;
+	margin-left: 10px;
 	display: inline-block;
 }
 
-#color-panel .btn-group {
-	border: 1px solid gray;
-	width: 60px;
-}
 
 #color-panel .btn {
-	width: 30px;
+	width: 35px;
 	height: 25px;
 	border: 1px solid rgba(200,200,200,0.8);
 }
@@ -127,10 +123,6 @@
 	top: 14px;
 	display: inline-block;
 	margin-left: 7px;
-}
-
-#redo-tool {
-	background-color: #fafafa;
 }
 
 

@@ -31,6 +31,11 @@
 	background-color: white;
 }
 
+#brow-icon {
+	margin-left: 2px;
+	margin-bottom: 5px;
+}
+
 #all-tools {
 	height: 620px;
 }

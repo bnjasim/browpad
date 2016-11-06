@@ -29,18 +29,18 @@ $(document).ready(function(){
 
 	var mouse = {x: 0, y: 0};
 	var start_mouse = {x:0, y:0};
-	var eraser_width = 10;
-	var fontSize = '14px';
+	var eraser_width = 10; // deault eraser width
+	var fontSize = '14px'; // default font size
 	
 	// Pencil Points
 	var ppts = [];
 
 	var chosen_size = 2; // by default
 	/* Drawing on Paint App */
-	tmp_ctx.lineWidth = 3;
+	tmp_ctx.lineWidth = 3; // default
 	tmp_ctx.lineJoin = 'round';
 	tmp_ctx.lineCap = 'round';
-	tmp_ctx.strokeStyle = 'black';
+	tmp_ctx.strokeStyle = 'black'; // default color
 	tmp_ctx.fillStyle = 'black';
 
 	// paint functions
@@ -166,8 +166,8 @@ $(document).ready(function(){
     	tmp_ctx.stroke();
     	tmp_ctx.closePath();
     	// restore linewidth
-    	tmp_ctx.lineWidth = tmp_lw;
-    	tmp_ctx.strokeStyle = tmp_ss;
+    	tmp_ctx.lineWidth = tmp_lw; // previous tool could be pencil or circle or whatever
+    	tmp_ctx.strokeStyle = tmp_ss; // recollect the previous color and font size
 	}
 
 	var paint_text = function(e) {
@@ -194,6 +194,7 @@ $(document).ready(function(){
 		mouse.y = typeof e.offsetY !== 'undefined' ? e.offsetY : e.layerY;	
 		// erase from the main ctx
     	ctx.clearRect(mouse.x, mouse.y, eraser_width, eraser_width);
+    	// tmp_ctx.clearRect(0, 0, tmp_canvas.width, tmp_canvas.height);
 	}
 
 	
@@ -298,9 +299,10 @@ $(document).ready(function(){
     	}
 
     	if (tool === 'eraser') {
-    		tmp_canvas.addEventListener('mousemove', paint_eraser, false);
+    		ctx.clearRect(mouse.x, mouse.y, eraser_width, eraser_width); // for single click erase	
+    		tmp_canvas.addEventListener('mousemove', paint_eraser, false); // for mousedown erase
     		// erase from the main ctx
-    		ctx.clearRect(mouse.x, mouse.y, eraser_width, eraser_width);		
+    		
     	}
 
     	if (tool === 'fill') {
@@ -499,8 +501,10 @@ $(document).ready(function(){
 		
 		// Writing down to real canvas now
 		// text-tool is managed when textarea.blur() event
+		
 		if (tool !='text') {
-			ctx.drawImage(tmp_canvas, 0, 0);
+			if (tool != 'eraser')
+			  ctx.drawImage(tmp_canvas, 0, 0); // don't write in the case of eraser, coz we delete directly from the ctx
 			// keep the image in the undo_canvas
 			undo_canvas_top = next_undo_canvas(undo_canvas_top);
 			var uctx = undo_canvas[undo_canvas_top]['uctx'];

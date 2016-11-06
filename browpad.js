@@ -3,10 +3,10 @@ $(document).ready(function(){
 	var sketch = document.querySelector('#sketch');
 	var canvas = document.querySelector('#canvas');
 	var tmp_canvas = document.createElement('canvas');
-	$('#paint-modal').css('visibility', 'hidden').show();
+	//$('#paint-modal').css('visibility', 'hidden').show();
 	canvas.width = $(sketch).width();
 	canvas.height = $(sketch).height();
-	$('#paint-modal').css('visibility', 'visible').hide();
+	//$('#paint-modal').css('visibility', 'visible').hide();
 	tmp_canvas.width = canvas.width;
 	tmp_canvas.height = canvas.height;
 

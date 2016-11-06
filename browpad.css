@@ -8,7 +8,6 @@
 #sketch {
 	border: 1px solid #eee;
 	position: relative;
-	float: left;
 	height: 100%;
 	width: 100%;
 	padding: 10px;
@@ -21,6 +20,15 @@
 	left: 10px; 
 	top: 10px;
 	cursor: crosshair;
+}
+
+#area1 {
+	position: fixed;
+	top: 0;
+	width: 100%;
+	z-index: 2;
+	opacity: 1;
+	background-color: white;
 }
 
 #all-tools {

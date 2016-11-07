@@ -139,6 +139,12 @@
 	margin-top: 10px;
 }
 
+#github-button {
+	position: relative;
+	top: 60px;
+	margin-left: 15px;
+}
+
 #text_tool {
     position: absolute;
     border: 1px dashed black;

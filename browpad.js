@@ -64,6 +64,7 @@ $(document).ready(function(){
 		}
 		
 		// Tmp canvas is always cleared up before drawing.
+		// This clearing is happening continuously, every time the mouse changes its position while drawing
 		tmp_ctx.clearRect(0, 0, tmp_canvas.width, tmp_canvas.height);
 		
 		tmp_ctx.beginPath();
@@ -186,7 +187,26 @@ $(document).ready(function(){
     	textarea.style.width = width + 'px';
     	textarea.style.height = height + 'px';
      
-    	textarea.style.display = 'block';
+    	textarea.style.display = 'block'; // change from none to block to make it visible
+	}
+
+	var paint_crop = function (e) {
+		// Tmp canvas is always cleared up before drawing.
+    	tmp_ctx.clearRect(0, 0, tmp_canvas.width, tmp_canvas.height);
+     	mouse.x = typeof e.offsetX !== 'undefined' ? e.offsetX : e.layerX;
+		mouse.y = typeof e.offsetY !== 'undefined' ? e.offsetY : e.layerY;	
+
+    	var x = Math.min(mouse.x, start_mouse.x);
+    	var y = Math.min(mouse.y, start_mouse.y);
+    	var width = Math.abs(mouse.x - start_mouse.x);
+    	var height = Math.abs(mouse.y - start_mouse.y);
+     
+    	croparea.style.left = x + 'px';
+    	croparea.style.top = y + 'px';
+    	croparea.style.width = width + 'px';
+    	croparea.style.height = height + 'px';
+     
+    	croparea.style.display = 'block'; // change from none to block to make it visible
 	}
 
 	var paint_eraser = function(e) {
@@ -202,7 +222,7 @@ $(document).ready(function(){
 	tool = 'pencil';
 	tools_func = {'pencil':paint_pencil, 'line':paint_line, 'square':paint_square, 
 					'circle':paint_circle, 'ellipse':paint_ellipse, 'eraser':paint_eraser,
-					'text':paint_text};
+					'text':paint_text, 'crop':paint_crop};
 
 	$('#tool-panel').on('click', function(event){
 		// remove the mouse down eventlistener if any
@@ -305,10 +325,20 @@ $(document).ready(function(){
     		
     	}
 
+    	if (tool === 'crop') {
+    		tmp_canvas.addEventListener('mousemove', paint_crop, false);
+    	}
+
     	
 	}, false);
 		
 	
+	// crop-tool
+	var croparea = document.createElement('textarea');
+	croparea.id = 'crop_area';
+	croparea.setAttribute('readonly', 'readonly');
+	sketch.appendChild(croparea);
+
 	// text-tool
 	var textarea = document.createElement('textarea');
 	textarea.id = 'text_tool';
@@ -361,7 +391,12 @@ $(document).ready(function(){
 			undo_canvas[undo_canvas_top]['redoable'] = false;
 	});
 
+	croparea.addEventListener('blur', function(e) {
+		croparea.style.display = 'none';
+	});
+
 	tmp_canvas.addEventListener('mouseup', function() {
+		console.log('mouse up');
 		tmp_canvas.removeEventListener('mousemove', tools_func[tool], false);
 		
 		// Writing down to real canvas now

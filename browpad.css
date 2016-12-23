@@ -156,3 +156,10 @@
     overflow: hidden;
     white-space: nowrap;
 }
+
+#crop_area {
+    position: absolute;
+    border: 1px dashed black;
+    outline: 0;
+    display: none;
+}

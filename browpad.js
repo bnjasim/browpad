@@ -35,6 +35,15 @@ $(document).ready(function(){
 	// Pencil Points
 	var ppts = [];
 
+	var something_selected = 0; // If tool is crop but there is no mouse move
+
+	function hide_selection() {
+		//console.log('hide selection');
+		croparea.style.display = 'none';
+		$('#crop-cancel-button').css('display', 'none');
+		something_selected = 0;
+	}
+
 	var chosen_size = 2; // by default
 	/* Drawing on Paint App */
 	tmp_ctx.lineWidth = 3; // default
@@ -207,6 +216,8 @@ $(document).ready(function(){
     	croparea.style.height = height + 'px';
      
     	croparea.style.display = 'block'; // change from none to block to make it visible
+
+    	something_selected = 1;
 	}
 
 	var paint_eraser = function(e) {
@@ -225,6 +236,9 @@ $(document).ready(function(){
 					'text':paint_text, 'crop':paint_crop};
 
 	$('#tool-panel').on('click', function(event){
+		// very important to hide the croparea. Othewise clicking outside won't hide it.
+    	hide_selection();
+
 		// remove the mouse down eventlistener if any
 		tmp_canvas.removeEventListener('mousemove', tools_func[tool], false);
 
@@ -253,6 +267,9 @@ $(document).ready(function(){
 	
 	// Change color
 	$('#color-panel').on('click', function(event){
+		// very important to hide the croparea. Othewise clicking outside won't hide it.
+    	hide_selection();
+
 		// remove the mouse down eventlistener if any
 		tmp_canvas.removeEventListener('mousemove', tools_func[tool], false);
 
@@ -270,7 +287,6 @@ $(document).ready(function(){
 		}
 	});
 
-	
 
 	// Mouse-Down 
 	tmp_canvas.addEventListener('mousedown', function(e) {
@@ -327,8 +343,10 @@ $(document).ready(function(){
 
     	if (tool === 'crop') {
     		tmp_canvas.addEventListener('mousemove', paint_crop, false);
+    		//console.log('addEventListener paint_crop');
     	}
-
+    	// very important to hide the croparea. Othewise clicking outside won't hide it.
+    	hide_selection();
     	
 	}, false);
 		
@@ -358,51 +376,60 @@ $(document).ready(function(){
 
 	textarea.addEventListener('blur', function(e) {
 		var lines = textarea.value.split('\n');
-			var ta_comp_style = getComputedStyle(textarea);
-    		var fs = ta_comp_style.getPropertyValue('font-size');
-    		
-    		var ff = ta_comp_style.getPropertyValue('font-family');
-    
-    		tmp_ctx.font = fs + ' ' + ff;
-    		tmp_ctx.textBaseline = 'hanging';
-     
-    		for (var n = 0; n < lines.length; n++) {
-        		var line = lines[n];
-         
-        		tmp_ctx.fillText(
-            		line,
-            		parseInt(textarea.style.left),
-            		parseInt(textarea.style.top) + n*parseInt(fs)
-        		);    		
-    		}
-     
-    		// Writing down to real canvas now
-    		ctx.drawImage(tmp_canvas, 0, 0);
-    		textarea.style.display = 'none';
-    		textarea.value = '';
-    		// Clearing tmp canvas
-			tmp_ctx.clearRect(0, 0, tmp_canvas.width, tmp_canvas.height);
+		var ta_comp_style = getComputedStyle(textarea);
+		var fs = ta_comp_style.getPropertyValue('font-size');
+		
+		var ff = ta_comp_style.getPropertyValue('font-family');
 
-			// keep the image in the undo_canvas
-			undo_canvas_top = next_undo_canvas(undo_canvas_top);
-			var uctx = undo_canvas[undo_canvas_top]['uctx'];
-			uctx.clearRect(0, 0, canvas.width, canvas.height);
-			uctx.drawImage(canvas, 0, 0);
-			undo_canvas[undo_canvas_top]['redoable'] = false;
+		tmp_ctx.font = fs + ' ' + ff;
+		tmp_ctx.textBaseline = 'hanging';
+ 
+		for (var n = 0; n < lines.length; n++) {
+    		var line = lines[n];
+     
+    		tmp_ctx.fillText(
+        		line,
+        		parseInt(textarea.style.left),
+        		parseInt(textarea.style.top) + n*parseInt(fs)
+    		);    		
+		}
+ 
+		// Writing down to real canvas now
+		ctx.drawImage(tmp_canvas, 0, 0);
+		textarea.style.display = 'none';
+		textarea.value = '';
+		// Clearing tmp canvas
+		tmp_ctx.clearRect(0, 0, tmp_canvas.width, tmp_canvas.height);
+
+		// keep the image in the undo_canvas
+		undo_canvas_top = next_undo_canvas(undo_canvas_top);
+		var uctx = undo_canvas[undo_canvas_top]['uctx'];
+		uctx.clearRect(0, 0, canvas.width, canvas.height);
+		uctx.drawImage(canvas, 0, 0);
+		undo_canvas[undo_canvas_top]['redoable'] = false;
 	});
+
+	// When resized by dragging the bottom-right dashed lines in the text area, the size of selection changes
+	croparea.addEventListener('mouseup', function(e) {
+		//console.log('removeEventListener paint_crop');
+		tmp_canvas.removeEventListener('mousemove', paint_crop, false);
+	}, false);
 
 	croparea.addEventListener('blur', function(e) {
-		croparea.style.display = 'none';
-	});
+		//console.log('blur');
+		hide_selection();
+	}, false);
+
+
 
 	tmp_canvas.addEventListener('mouseup', function() {
-		console.log('mouse up');
+		// console.log('mouse up');
 		tmp_canvas.removeEventListener('mousemove', tools_func[tool], false);
 		
 		// Writing down to real canvas now
 		// text-tool is managed when textarea.blur() event
 		
-		if (tool !='text') {
+		if (tool !=='text' && tool !== 'crop') {
 			if (tool != 'eraser')
 			  ctx.drawImage(tmp_canvas, 0, 0); // don't write in the case of eraser, coz we delete directly from the ctx
 			// keep the image in the undo_canvas
@@ -413,6 +440,12 @@ $(document).ready(function(){
 			undo_canvas[undo_canvas_top]['redoable'] = false;
 		}
 
+		if (tool === 'crop') {
+			//console.log('removeEventListener paint_crop');
+			// show crop-cancel-button only if there was a movemove previously, not a single mouse click
+			if (something_selected) 
+				$('#crop-cancel-button').css('display','block');
+		}
 
 		// Clearing tmp canvas
 		tmp_ctx.clearRect(0, 0, tmp_canvas.width, tmp_canvas.height);
@@ -437,6 +470,9 @@ $(document).ready(function(){
 
 	// clear paint area
 	$('#paint-clear').click(function(){
+		// very important to hide the croparea. Othewise clicking outside won't hide it.
+    	hide_selection();
+
 		ctx.clearRect(0, 0, tmp_canvas.width, tmp_canvas.height);
 		// keep the image in the undo_canvas
 		undo_canvas_top = next_undo_canvas(undo_canvas_top);
@@ -449,6 +485,9 @@ $(document).ready(function(){
 
 	// Change Size
 	$('#choose-size .radio-group').on('click', function(){
+		// very important to hide the croparea. Othewise clicking outside won't hide it.
+    	hide_selection();
+
 		var s = $('input[name=size]:checked', '#choose-size').val();
 		if (s==='1') {
 			tmp_ctx.lineWidth = 1;
@@ -474,6 +513,9 @@ $(document).ready(function(){
 
 	// undo-redo tools
 	$('#undo-tool').on('click', function(){
+		// very important to hide the croparea. Othewise clicking outside won't hide it.
+    	hide_selection();
+
 		var prev = prev_undo_canvas(undo_canvas_top);
 		if (!undo_canvas[prev].redoable) {
 			console.log(undo_canvas_top+' prev='+prev);
@@ -486,6 +528,9 @@ $(document).ready(function(){
 	});
 	
 	$('#redo-tool').on('click', function(){
+		// very important to hide the croparea. Othewise clicking outside won't hide it.
+    	hide_selection();
+
 		var next = next_undo_canvas(undo_canvas_top);
 		if (undo_canvas[next].redoable) {
 			console.log(undo_canvas_top);
@@ -496,5 +541,9 @@ $(document).ready(function(){
 			undo_canvas_top = next;
 		}
 	});
+
+	$('#cancel-button').on('click', function() {
+		hide_selection();
+	})
 
 });

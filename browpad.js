@@ -546,9 +546,33 @@ $(document).ready(function(){
 		hide_selection();
 	});
 
-
+	var crop_canvas = document.createElement('canvas');
 	$('#crop-button').on('click', function() {
-	
+		// Reset the Canvas! 
+		
+		var w = parseInt(croparea.style.width, 10); // selection width
+		var h = parseInt(croparea.style.height, 10); // selection height
+		var t = parseInt(croparea.style.top, 10);
+		var l = parseInt(croparea.style.left, 10);
+		crop_canvas.width = w;
+		crop_canvas.height = h;
+		sketch.appendChild(crop_canvas);
+		c_ctx = crop_canvas.getContext('2d');	
+		tmp_ctx.drawImage(crop_canvas, 0, 0);
+		//ctx.drawImage(tmp_canvas,0,0);
+		
+		// Remove the old canvas and add the new canvas
+		sketch.removeChild(canvas);
+		crop_canvas.id = 'canvas';
+		//ctx = canvas.getContext('2d');
+
+		// change attributes for tmp_canvas as well
+		// Cool thing is we don't have to remove and add another tmp_canvas which would have forced us to
+		// redefine the mouse click event listeners.
+		//tmp_canvas.width = w;
+		//tmp_canvas.height = h;
+
+
 		hide_selection();
 	});
 

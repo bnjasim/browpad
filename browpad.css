@@ -6,7 +6,7 @@
 }
 
 #sketch {
-	border: 1px solid #eee;
+	/*border: 1px solid #eee;*/
 	position: relative;
 	height: 100%;
 	width: 100%;
@@ -20,6 +20,7 @@
 	left: 10px; 
 	top: 10px;
 	cursor: crosshair;
+	border: 1px solid rgba(100,100,100,0.5);
 }
 
 #area1 {
@@ -141,8 +142,8 @@
 
 #github-button {
 	position: relative;
-	top: 60px;
-	margin-left: 15px;
+	top: 30px;
+	margin-left: 6px;
 }
 
 #text_tool {
@@ -168,7 +169,7 @@
 }
 
 #crop-cancel-button {
-	position: absolute;
+	position: fixed;
 	right: 0px;
 	top: 0px;
 	z-index: 100;

@@ -544,6 +544,12 @@ $(document).ready(function(){
 
 	$('#cancel-button').on('click', function() {
 		hide_selection();
-	})
+	});
+
+
+	$('#crop-button').on('click', function() {
+	
+		hide_selection();
+	});
 
 });

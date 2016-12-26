@@ -547,6 +547,9 @@ $(document).ready(function(){
 	});
 
 	var crop_canvas = document.createElement('canvas');
+	crop_canvas.id = 'crop_canvas';
+	sketch.appendChild(crop_canvas);
+
 	$('#crop-button').on('click', function() {
 		// Reset the Canvas! 
 		
@@ -556,14 +559,14 @@ $(document).ready(function(){
 		var l = parseInt(croparea.style.left, 10);
 		crop_canvas.width = w;
 		crop_canvas.height = h;
-		sketch.appendChild(crop_canvas);
+		
 		c_ctx = crop_canvas.getContext('2d');	
-		tmp_ctx.drawImage(crop_canvas, 0, 0);
+		c_ctx.drawImage(canvas, l, t, w, h, 0, 0, w, h);
 		//ctx.drawImage(tmp_canvas,0,0);
 		
 		// Remove the old canvas and add the new canvas
-		sketch.removeChild(canvas);
-		crop_canvas.id = 'canvas';
+		//sketch.removeChild(canvas);
+		
 		//ctx = canvas.getContext('2d');
 
 		// change attributes for tmp_canvas as well
@@ -571,7 +574,6 @@ $(document).ready(function(){
 		// redefine the mouse click event listeners.
 		//tmp_canvas.width = w;
 		//tmp_canvas.height = h;
-
 
 		hide_selection();
 	});

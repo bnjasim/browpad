@@ -20,7 +20,7 @@
 	left: 10px; 
 	top: 10px;
 	cursor: crosshair;
-	border: 1px solid rgba(100,100,100,0.5);
+	/* border: 1px solid rgba(100,100,100,0.5); */
 }
 
 #area1 {
@@ -177,8 +177,9 @@
 }
 
 #crop_canvas {
-	position: absolute;
+	/* position: absolute;
 	top: 20px;
 	right: 5px;
-	z-index: 10;
+	z-index: 10; */
+	visibility: hidden;
 }

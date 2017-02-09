@@ -565,7 +565,7 @@ $(document).ready(function(){
 		//ctx.drawImage(tmp_canvas,0,0);
 		
 		// Remove the old canvas and add the new canvas
-		//sketch.removeChild(canvas);
+		// sketch.removeChild(canvas);
 		
 		//ctx = canvas.getContext('2d');
 

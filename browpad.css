@@ -57,6 +57,7 @@
 #tool-panel .btn-group > .btn {
 	float: none;
 	background-color: #fafafb;
+	padding: 8px 12px;
 }
 
 #tool-panel .btn-group {

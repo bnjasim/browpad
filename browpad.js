@@ -563,20 +563,28 @@ $(document).ready(function(){
 		crop_canvas.height = h;
 		
 		c_ctx.drawImage(canvas, l, t, w, h, 0, 0, w, h);
-		//ctx.drawImage(tmp_canvas,0,0);
 		
-		// Remove the old canvas and add the new canvas
-		// sketch.removeChild(canvas);
-		
-		//ctx = canvas.getContext('2d');
-
-		// change attributes for tmp_canvas as well
-		// Cool thing is we don't have to remove and add another tmp_canvas which would have forced us to
-		// redefine the mouse click event listeners.
-		//tmp_canvas.width = w;
-		//tmp_canvas.height = h;
-
+		// Remove the selection text area
 		hide_selection();
+		
+		// Copy selected image to the clipboard
+		var dataURL = crop_canvas.toDataURL();
+		// window.open(dataURL, '_blank');
+		
+		// To Copy to the clipboard
+		// Create a textarea and set its contents to the text you want copied to the clipboard.
+		// Append the textarea to the DOM.
+		// Select the text in the textarea.
+		// Call document.execCommand("copy")
+		// Remove the textarea from the dom.
+		var clipboard_textarea = document.createElement('textarea');
+		clipboard_textarea.id = 'cliparea';
+		sketch.appendChild(clipboard_textarea);
+		$('#cliparea').val(dataURL);
+		document.getElementById("cliparea").select();
+		document.execCommand('copy');
+		sketch.removeChild(clipboard_textarea);
+		
 		
 		// Show the alert that content has been copied!
 		$('#alert-bottom').addClass('in');

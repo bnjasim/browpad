@@ -183,7 +183,7 @@
 	top: 20px;
 	right: 5px;
 	z-index: 10; */
-	visibility: hidden;
+	display: none;
 }
 
 #alert-bottom {

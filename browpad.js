@@ -549,7 +549,9 @@ $(document).ready(function(){
 	var crop_canvas = document.createElement('canvas');
 	crop_canvas.id = 'crop_canvas';
 	sketch.appendChild(crop_canvas);
+	var c_ctx = crop_canvas.getContext('2d');	
 
+	// Also called copy button
 	$('#crop-button').on('click', function() {
 		// Reset the Canvas! 
 		
@@ -560,7 +562,6 @@ $(document).ready(function(){
 		crop_canvas.width = w;
 		crop_canvas.height = h;
 		
-		c_ctx = crop_canvas.getContext('2d');	
 		c_ctx.drawImage(canvas, l, t, w, h, 0, 0, w, h);
 		//ctx.drawImage(tmp_canvas,0,0);
 		
@@ -576,6 +577,13 @@ $(document).ready(function(){
 		//tmp_canvas.height = h;
 
 		hide_selection();
+		
+		// Show the alert that content has been copied!
+		$('#alert-bottom').addClass('in');
+		// Remove the alert after 1.8s
+		setTimeout(function(){
+			$('#alert-bottom').removeClass('in');
+		}, 1800);
 	});
 
 });

@@ -21,13 +21,14 @@
 	top: 10px;
 	cursor: crosshair;
 	/* border: 1px solid rgba(100,100,100,0.5); */
+	z-index: 5; /* more preference than the alert-bottom, but less than the tool area */
 }
 
 #area1 {
 	position: fixed;
 	top: 20px;
 	width: 88px;
-	z-index: 2;
+	z-index: 10;
 	opacity: 1;
 	background-color: white;
 }
@@ -173,7 +174,7 @@
 	position: fixed;
 	right: 0px;
 	top: 0px;
-	z-index: 100;
+	z-index: 10;
 	display: none;
 }
 
@@ -183,4 +184,15 @@
 	right: 5px;
 	z-index: 10; */
 	visibility: hidden;
+}
+
+#alert-bottom {
+  font-size: 13px;
+  position: fixed;
+  bottom: 0;
+  margin-bottom: 0 !important;
+  width: 100%;
+  height: 52px;
+  text-align: center;
+  z-index: 0;
 }

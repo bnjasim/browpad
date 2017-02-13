@@ -159,6 +159,8 @@
     overflow: hidden;
     white-space: nowrap;
     opacity: 0.8;
+
+    z-index: 8;
 }
 
 #crop_area {
